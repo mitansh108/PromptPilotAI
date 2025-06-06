@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import { Home, Sparkles, CreditCard, Settings, LogOut } from "lucide-react";
+import { Home, CreditCard, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
@@ -11,19 +10,20 @@ function SideNav() {
   const path = usePathname();
 
   return (
-    <nav className="fixed mb-5 top-0 left-0 right-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white shadow-md z-50">
+    <nav className="fixed top-0 left-0 right-0 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white shadow-md z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+        {/* Logo */}
         <Link href="/">
-          <div className="flex items-center cursor-pointer">
-          <h1 className="text-2xl font-bold text-purple-400">PromptPilot.AI</h1>
-          </div>
+          <h1 className="text-2xl font-bold text-purple-400 cursor-pointer">
+            PromptPilot.AI
+          </h1>
         </Link>
 
-        <div className="flex gap-10 text-md font-medium">
-          <NavLink href="/dashboard" icon={<Home size={20} />} active={path === "/"}>
+        {/* Nav Links - Hidden on mobile */}
+        <div className="hidden sm:flex gap-6 text-sm font-medium items-center">
+          <NavLink href="/dashboard" icon={<Home size={20} />} active={path === "/dashboard"}>
             Dashboard
           </NavLink>
-          
           <NavLink href="/dashboard/billing" icon={<CreditCard size={20} />} active={path === "/dashboard/billing"}>
             Billing
           </NavLink>
@@ -32,10 +32,10 @@ function SideNav() {
           </NavLink>
         </div>
 
-
-        <UserButton />
-
-        
+        {/* User button - Always visible */}
+        <div>
+          <UserButton />
+        </div>
       </div>
     </nav>
   );
