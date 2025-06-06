@@ -1,103 +1,119 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
+import "@/app/globals.css";
+import ScrollingFeatures from "./ScrollingFeatures";
+import FAQSection from "./FAQSection";
+
+
+
+
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-950 to-black text-white px-4 sm:px-6 md:px-12 lg:px-24 py-10 sm:py-12 flex flex-col">
+      {/* Header */}
+      <header className="flex flex-col sm:flex-row justify-between items-center gap-y-4 mb-16 sm:mb-20">
+  <h1 className="text-2xl sm:text-3xl font-bold text-purple-400">
+    PromptPilot.AI
+  </h1>
+  <nav className="flex flex-wrap justify-center gap-4 text-sm sm:text-base">
+    <Link href="/features" className="hover:text-purple-400">
+      Features
+    </Link>
+    <Link href="/pricing" className="hover:text-purple-400">
+      Pricing
+    </Link>
+    <Link href="/contact" className="hover:text-purple-400">
+      Contact
+    </Link>
+    <Link href="/dashboard">
+      <Button className="bg-purple-600 hover:bg-purple-700 transition text-white rounded-full px-6 py-2 shadow-lg text-sm sm:text-base">
+        Get Started 🚀
+      </Button>
+    </Link>
+  </nav>
+</header>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+
+      {/* Hero Section */}
+      <section className="text-center w-full max-w-4xl mx-auto flex-grow flex flex-col items-center">
+        <p className="text-xs sm:text-sm text-purple-400 font-semibold mb-3 sm:mb-4">
+          ✨ The ultimate AI content engine
+        </p>
+        <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-4 sm:mb-6 leading-tight">
+          Generate High-Quality Content <br className="hidden sm:block" /> and
+          Grow Traffic on Autopilot
+        </h1>
+        <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 max-w-xl sm:max-w-3xl">
+          With <span className="text-white font-semibold">PromptPilot.AI</span>, create
+          SEO-friendly blogs, social posts, emails, and marketing copy in
+          minutes. Save time. Drive results.
+        </p>
+
+        <ScrollingFeatures />
+
+        <Link href="/sign-up" className="mt-4">
+          <Button className="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 transition shadow-xl text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 rounded-full">
+            ✍️ Generate Your First Post
+          </Button>
+        </Link>
+        <p className="text-xs sm:text-sm text-gray-400 mt-3">
+          No credit card required
+        </p>
+      </section>
+
+      {/* Prompt Guide Section */}
+      <section className="mt-24 text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-6">Essential Steps for Writing AI Prompts</h2>
+        <p className="text-gray-300 mb-10">Follow these proven steps to create effective AI prompts</p>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { number: "01", title: "Define Clear Objectives", desc: "Start with a clear goal and specific requirements for your prompt" },
+            { number: "02", title: "Provide Context", desc: "Include relevant background information and specific details" },
+            { number: "03", title: "Structure Your Prompt", desc: "Organize information logically with clear sections and formatting" },
+            { number: "04", title: "Refine and Test", desc: "Iterate and improve your prompt based on the results" },
+          ].map((step) => (
+            <div key={step.number} className="bg-white bg-opacity-5 p-6 rounded-2xl shadow-md text-left">
+              <h3 className="text-purple-400 font-bold text-lg mb-2">{step.number}</h3>
+              <h4 className="text-white font-semibold mb-1">{step.title}</h4>
+              <p className="text-gray-300 text-sm">{step.desc}</p>
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* Quick Prompt Builder */}
+      <section className="mt-24 text-center">
+        <h2 className="text-2xl sm:text-3xl font-bold mb-6">Create Perfect AI Prompts in Seconds</h2>
+        <p className="text-gray-300 mb-10">Follow these simple steps to create optimized Prompts for AI models in seconds.</p>
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            {
+              title: "Enter Your Idea",
+              desc: "Simply input your task, goal, or a simple prompt. Our tool works with any type of input to create custom AI instructions."
+            },
+            {
+              title: "AI-Powered Enhancements",
+              desc: "Our AI analyzes your input and generates a comprehensive, optimized prompt tailored for various AI models."
+            },
+            {
+              title: "Usage and Refinement",
+              desc: "You can instantly view the generated prompt. Copy and paste it directly into ChatGPT, Claude, Gemini, or any other AI model."
+            }
+          ].map((card) => (
+            <div key={card.title} className="bg-white bg-opacity-5 p-6 rounded-2xl shadow-md text-left">
+              <h4 className="text-white font-semibold mb-2">{card.title}</h4>
+              <p className="text-gray-300 text-sm">{card.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+          <FAQSection />
+      {/* Footer */}
+      <footer className="mt-24 sm:mt-32 text-center text-xs sm:text-sm text-gray-500">
+        &copy; {new Date().getFullYear()} PromptPilot.AI. All rights reserved.
       </footer>
-    </div>
+    </main>
   );
 }
