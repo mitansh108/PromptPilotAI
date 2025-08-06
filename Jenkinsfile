@@ -12,6 +12,7 @@ pipeline {
         NEXT_PUBLIC_CLERK_SIGN_IN_URL = credentials('NEXT_PUBLIC_CLERK_SIGN_IN_URL')
         NEXT_PUBLIC_CLERK_SIGN_UP_URL = credentials('NEXT_PUBLIC_CLERK_SIGN_UP_URL')
         NEXT_PUBLIC_GEMINI_API_KEY = credentials('NEXT_PUBLIC_GEMINI_API_KEY')
+        VERCEL_TOKEN = credentials('VERCEL_TOKEN')
     }
     
     stages {
@@ -29,6 +30,8 @@ pipeline {
         
         stage('Build') {
             steps {
+                // Create cache directory if it doesn't exist
+                sh 'mkdir -p .next/cache'
                 sh 'npm run build'
             }
         }
@@ -42,9 +45,9 @@ pipeline {
         
         stage('Deploy') {
             steps {
-                // Add your deployment commands here
-                echo 'Deploying application...'
-                // Example: sh 'npm run deploy'
+                echo 'Deploying to Vercel...'
+                sh 'npx vercel --token $VERCEL_TOKEN --prod --yes'
+                echo 'Deployment completed!'
             }
         }
     }
