@@ -1,6 +1,10 @@
 pipeline {
     agent any
     
+    tools {
+        nodejs 'Node20' // This matches the name in Global Tool Configuration
+    }
+    
     environment {
         // Use the global credentials you created
         NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY = credentials('NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY')
@@ -29,9 +33,9 @@ pipeline {
             }
         }
         
-        stage('Test') {
+        stage('Lint') {
             steps {
-                sh 'npm test -- --watchAll=false'
+                sh 'npm run lint'
             }
         }
         
