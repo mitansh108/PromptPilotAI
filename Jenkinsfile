@@ -36,6 +36,36 @@ pipeline {
             }
         }
         
+        stage('Docker Build') {
+            steps {
+                echo 'Building Docker image...'
+                sh 'docker build -t prompt-pilot:latest .'
+                sh 'docker build -t prompt-pilot:${BUILD_NUMBER} .'
+                echo 'Docker image built successfully!'
+            }
+        }
+        
+        stage('Docker Test') {
+            steps {
+                echo 'Testing Docker container...'
+                sh '''
+                    # Run container in background
+                    docker run -d --name prompt-pilot-test-${BUILD_NUMBER} -p 3001:3000 prompt-pilot:${BUILD_NUMBER}
+                    
+                    # Wait for container to start
+                    sleep 10
+                    
+                    # Test if container is responding
+                    curl -f http://localhost:3001 || exit 1
+                    
+                    # Stop and remove test container
+                    docker stop prompt-pilot-test-${BUILD_NUMBER}
+                    docker rm prompt-pilot-test-${BUILD_NUMBER}
+                '''
+                echo 'Docker container test passed!'
+            }
+        }
+        
         stage('Lint') {
             steps {
                 echo 'Skipping lint for now - ESLint not configured'
@@ -54,13 +84,24 @@ pipeline {
     
     post {
         always {
+            // Clean up Docker containers and images
+            sh '''
+                # Remove test containers if they exist
+                docker rm -f prompt-pilot-test-${BUILD_NUMBER} || true
+                
+                # Keep only the latest 5 images to save space
+                docker images prompt-pilot --format "table {{.Tag}}" | tail -n +2 | sort -nr | tail -n +6 | xargs -r docker rmi prompt-pilot: || true
+            '''
             cleanWs()
         }
         success {
             echo 'Pipeline succeeded!'
+            echo "Docker image prompt-pilot:${BUILD_NUMBER} is ready!"
         }
         failure {
             echo 'Pipeline failed!'
+            // Clean up on failure
+            sh 'docker rm -f prompt-pilot-test-${BUILD_NUMBER} || true'
         }
     }
 }
