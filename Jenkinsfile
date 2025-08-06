@@ -46,7 +46,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying to Vercel...'
-                sh 'npx vercel --token $VERCEL_TOKEN --prod --yes'
+                sh '''
+                    npx vercel --token $VERCEL_TOKEN \
+                    --env NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY \
+                    --env CLERK_SECRET_KEY=$CLERK_SECRET_KEY \
+                    --env NEXT_PUBLIC_CLERK_SIGN_IN_URL=$NEXT_PUBLIC_CLERK_SIGN_IN_URL \
+                    --env NEXT_PUBLIC_CLERK_SIGN_UP_URL=$NEXT_PUBLIC_CLERK_SIGN_UP_URL \
+                    --env NEXT_PUBLIC_GEMINI_API_KEY=$NEXT_PUBLIC_GEMINI_API_KEY \
+                    --prod --yes
+                '''
                 echo 'Deployment completed!'
             }
         }
